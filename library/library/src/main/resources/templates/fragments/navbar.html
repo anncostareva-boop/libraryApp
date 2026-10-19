@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="uk"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<body>
+
+<nav th:fragment="navbar"
+     class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
+
+    <div class="container">
+
+        <a class="navbar-brand fw-bold"
+           th:href="@{/}">
+
+            Athena
+
+        </a>
+
+        <button class="navbar-toggler"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#navbarNav">
+
+            <span class="navbar-toggler-icon"></span>
+
+        </button>
+
+        <div class="collapse navbar-collapse"
+             id="navbarNav">
+
+            <ul class="navbar-nav me-auto">
+
+                <li class="nav-item">
+
+                    <a class="nav-link"
+                       th:href="@{/}">
+
+                        Головна
+
+                    </a>
+
+                </li>
+
+                <li class="nav-item">
+
+                    <a class="nav-link"
+                       th:href="@{/books}">
+
+                        Каталог
+
+                    </a>
+
+                </li>
+
+                <li class="nav-item"
+                    sec:authorize="hasRole('CLIENT')">
+
+                    <a class="nav-link"
+                       th:href="@{/profile}">
+
+                        Профіль
+
+                    </a>
+
+                </li>
+
+                <li class="nav-item"
+                    sec:authorize="hasRole('CLIENT')">
+
+                    <a class="nav-link"
+                       th:href="@{/notifications}">
+
+                        Повідомлення
+
+                        <span th:if="${unreadNotifications > 0}"
+                              class="badge bg-danger ms-1"
+                              th:text="${unreadNotifications}">
+    </span>
+
+                    </a>
+
+                </li>
+
+                <li class="nav-item"
+                    sec:authorize="hasRole('CLIENT')">
+
+                    <a class="nav-link"
+                       th:href="@{/client/requests}">
+
+                        Запити
+
+                    </a>
+
+                </li>
+
+                <li class="nav-item"
+                    sec:authorize="hasRole('CLIENT')">
+
+                    <a class="nav-link"
+                       th:href="@{/fines}">
+
+                        Штрафи
+
+                    </a>
+
+                </li>
+
+                <li class="nav-item"
+                    sec:authorize="hasRole('ADMIN')">
+
+                    <a class="nav-link"
+                       th:href="@{/notifications}">
+
+                        Повідомлення
+
+                        <span th:if="${unreadNotifications > 0}"
+                              class="badge bg-danger ms-1"
+                              th:text="${unreadNotifications}">
+    </span>
+
+                    </a>
+
+                </li>
+
+                <li class="nav-item"
+                    sec:authorize="hasRole('ADMIN')">
+
+                    <a class="nav-link text-warning"
+                       th:href="@{/admin/requests}">
+
+                        Запити
+
+                    </a>
+
+                </li>
+
+                <li class="nav-item" sec:authorize="hasRole('ADMIN')">
+                    <a class="nav-link text-warning"
+                       th:href="@{/admin/profile}">
+                        Мій профіль
+                    </a>
+                </li>
+
+                <li class="nav-item"
+                    sec:authorize="hasRole('ADMIN')">
+
+                    <a class="nav-link text-warning"
+                       th:href="@{/admin/fines}">
+
+                        Штрафи
+
+                    </a>
+
+                </li>
+
+                <li class="nav-item"
+                    sec:authorize="hasRole('ADMIN')">
+
+                    <a class="nav-link text-warning"
+                       th:href="@{/admin/users}">
+
+                        Користувачі
+
+                    </a>
+
+                </li>
+
+                <li class="nav-item"
+                    sec:authorize="hasRole('ADMIN')">
+
+                    <a class="nav-link text-warning"
+                       th:href="@{/admin/issuances}">
+
+                        Видачі
+
+                    </a>
+
+                </li>
+
+                <li class="nav-item"
+                    sec:authorize="hasRole('ADMIN')">
+
+                    <a class="nav-link text-warning"
+                       th:href="@{/admin/return}">
+
+                        Повернення
+
+                    </a>
+
+                </li>
+
+            </ul>
+
+            <ul class="navbar-nav">
+
+                <li class="nav-item"
+                    sec:authorize="!isAuthenticated()">
+
+                    <a class="nav-link"
+                       th:href="@{/login}">
+
+                        Увійти
+
+                    </a>
+
+                </li>
+
+                <li class="nav-item"
+                    sec:authorize="!isAuthenticated()">
+
+                    <a class="nav-link"
+                       th:href="@{/register}">
+
+                        Реєстрація
+
+                    </a>
+
+                </li>
+
+                <li class="nav-item"
+                    sec:authorize="isAuthenticated()">
+
+                    <form th:action="@{/logout}"
+                          method="post">
+
+                        <button type="submit"
+                                class="btn btn-outline-light btn-sm ms-2">
+
+                            Вийти
+
+                        </button>
+
+                    </form>
+
+                </li>
+
+            </ul>
+
+        </div>
+
+    </div>
+
+</nav>
+
+</body>
+</html>

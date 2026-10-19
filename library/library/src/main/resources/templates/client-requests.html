@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="uk"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Мої запити</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+          rel="stylesheet">
+
+    <link rel="stylesheet"
+          th:href="@{/css/style.css}">
+</head>
+
+<body>
+
+<div th:replace="~{fragments/navbar :: navbar}"></div>
+
+<main class="container py-5">
+
+    <div th:replace="~{fragments/alerts :: alerts}"></div>
+
+    <div class="card p-4">
+
+        <h2 class="mb-4">
+            Мої запити
+        </h2>
+
+        <div th:if="${#lists.isEmpty(requests)}"
+             class="alert alert-secondary">
+            Немає запитів
+        </div>
+
+        <table th:if="${!#lists.isEmpty(requests)}"
+               class="table align-middle">
+
+        <div th:if="${noActiveRequestsMessage}"
+             class="alert alert-secondary"
+             th:text="${noActiveRequestsMessage}">
+        </div>
+
+            <thead>
+            <tr>
+                <th>ID запиту</th>
+                <th>ID книги</th>
+                <th>Статус</th>
+                <th>Дата створення</th>
+            </tr>
+            </thead>
+
+            <tbody>
+
+            <tr th:each="request : ${requests}">
+
+                <td th:text="${request.requestID}"></td>
+
+                <td>
+                    <a th:href="@{/books/{id}(id=${request.bookID})}"
+                       th:text="${request.bookID}">
+                    </a>
+                </td>
+
+                <td>
+
+                    <span class="badge bg-warning"
+                          th:if="${request.status.name() == 'PENDING'}">
+                        Очікується
+                    </span>
+
+                    <span class="badge bg-primary"
+                          th:if="${request.status.name() == 'AWAITING_ISSUANCE'}">
+                        Очікує видачі
+                    </span>
+
+                    <span class="badge bg-success"
+                          th:if="${request.status.name() == 'APPROVED'}">
+                        Схвалено
+                    </span>
+
+                    <span class="badge bg-danger"
+                          th:if="${request.status.name() == 'REJECTED'}">
+                        Відхилено
+                    </span>
+
+                </td>
+
+                <td th:text="${request.createdAt}"></td>
+
+            </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</main>
+
+<div th:replace="~{fragments/footer :: footer}"></div>
+
+</body>
+</html>
